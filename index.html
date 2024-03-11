@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Пошук зображень</title>
+    
+    <script type="module" crossorigin src="/goit-js-hw-12/commonHelpers.js"></script>
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-f3f87f24.js">
+    <link rel="stylesheet" href="/goit-js-hw-12/assets/vendor-cf6910df.css">
+    <link rel="stylesheet" href="/goit-js-hw-12/assets/index-0bacd737.css">
+  </head>
+  <body>
+    <main>
+      <form class="search-form">
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Введіть текст для пошуку"
+        />
+        <button type="submit">Search</button>
+      </form>
+      <ul class="gallery"></ul>
+      <button class="load-more-btn" style="display: none">Load more</button>
+      <div class="load-more-loader" style="display: none"></div>
+
+      <div class="error"></div>
+      <div class="loader-container">
+        <div class="loader"></div>
+      </div>
+    </main>
+    
+  </body>
+</html>
