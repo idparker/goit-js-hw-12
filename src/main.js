@@ -1,9 +1,5 @@
 import { fetchImages } from './js/pixabay-api.js';
-import {
-  renderImages,
-  showErrorToast,
-  showEmptyMessage,
-} from './js/render-functions.js';
+import { renderImages, showErrorToast } from './js/render-functions.js';
 import SimpleLightbox from 'simplelightbox';
 import 'izitoast/dist/css/iziToast.min.css';
 import 'simplelightbox/dist/simple-lightbox.min.css';
@@ -18,10 +14,6 @@ const loadMoreLoader = document.querySelector('.load-more-loader');
 let currentPage = 1;
 let searchQuery = '';
 let lightbox = new SimpleLightbox('.gallery a');
-
-function resetPage() {
-  currentPage = 1;
-}
 
 function getCardHeight() {
   const firstImage = document.querySelector('.gallery-item');
@@ -43,37 +35,39 @@ function getImages(event) {
   }
 
   if (searchQuery !== QUERY) {
-    resetPage();
     gallery.innerHTML = '';
     loadMoreButton.style.display = 'none';
+    currentPage = 1;
   }
 
   searchQuery = QUERY;
 
   loaderContainer.style.display = 'block';
 
-  fetchImages(searchQuery)
+  fetchImages(searchQuery, currentPage)
     .then(data => {
       const { images, totalHits } = data;
 
-      if (images.length > 0) {
-        renderImages(images);
+      // Проверка наличия изображений
+      if (images.length === 0) {
+        throw new Error('No images found');
+      }
 
-        if (images.length >= 15 && currentPage * 15 < totalHits) {
-          loadMoreButton.style.display = 'block';
-        } else {
-          loadMoreButton.style.display = 'none';
-          showErrorToast(
-            "We're sorry, but you've reached the end of search results."
-          );
-        }
+      // Ваш остальной код без проверки наличия изображений
+      renderImages(images);
+
+      if (images.length >= 15 && currentPage * 15 < totalHits) {
+        loadMoreButton.style.display = 'block';
       } else {
-        showEmptyMessage();
+        loadMoreButton.style.display = 'none';
+        showErrorToast('Извините, но вы достигли конца результатов поиска.');
       }
     })
     .catch(error => {
-      console.error('Error fetching images:', error);
-      showErrorToast('Failed to fetch images. Please try again later.');
+      console.error('Ошибка при получении изображений:', error);
+      showErrorToast(
+        'Не удалось получить изображения. Пожалуйста, попробуйте позже.'
+      );
     })
     .finally(() => {
       loaderContainer.style.display = 'none';

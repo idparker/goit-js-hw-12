@@ -45,10 +45,3 @@ export function showErrorToast(message) {
   });
   loaderContainer.style.display = 'none';
 }
-
-export function showEmptyMessage() {
-  gallery.innerHTML =
-    '<p class="empty-message">По вашему запросу не найдено ни одного изображения. Попробуйте еще раз!</p>';
-  showErrorToast('Error.');
-  loaderContainer.style.display = 'none';
-}
