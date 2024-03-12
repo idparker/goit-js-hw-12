@@ -78,6 +78,8 @@ function loadMoreImages() {
   loaderContainer.style.display = 'block';
   loadMoreLoader.style.display = 'block';
 
+  currentPage++;
+
   fetchImages(searchQuery, currentPage)
     .then(data => {
       const { images, totalHits } = data;
@@ -108,8 +110,6 @@ function loadMoreImages() {
       loaderContainer.style.display = 'none';
       loadMoreLoader.style.display = 'none';
     });
-
-  currentPage++;
 }
 
 function smoothScroll(distance) {
